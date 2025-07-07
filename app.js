@@ -58,7 +58,9 @@ io.on("connection", async (socket) => {
     const chat = {
       username: user.username,
       message: msg,
-      time: new Date().toLocaleTimeString(),
+      time: new Date().toLocaleTimeString("en-IN", {
+        timeZone: "Asia/Kolkata",
+      }),
       profilePic: user.profilePic,
     };
 
