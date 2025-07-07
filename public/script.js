@@ -1,0 +1,76 @@
+const socket = io();
+const overlay = document.getElementById("overlay");
+const startChat = document.getElementById("startChat");
+const usernameInput = document.getElementById("usernameInput");
+const welcomeMsg = document.getElementById("welcomeMsg");
+const chatContainer = document.getElementById("chatContainer");
+const messageForm = document.getElementById("messageForm");
+const messageInput = document.getElementById("messageInput");
+const messages = document.getElementById("messages");
+const userList = document.getElementById("userList");
+const typingIndicator = document.getElementById("typingIndicator");
+
+let username = "";
+let typingTimeout = null;
+
+startChat.addEventListener("click", () => {
+  username = usernameInput.value.trim();
+  if (username) {
+    socket.emit("join", { username });
+    overlay.style.display = "none";
+    chatContainer.style.display = "flex";
+    welcomeMsg.innerText = `Welcome, ${username}!`;
+  }
+});
+
+messageForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const msg = messageInput.value.trim();
+  if (msg) {
+    socket.emit("chatMessage", msg);
+    messageInput.value = "";
+    stopTyping();
+  }
+});
+
+messageInput.addEventListener("input", () => {
+  socket.emit("typing", username);
+  clearTimeout(typingTimeout);
+  typingTimeout = setTimeout(stopTyping, 1000);
+});
+
+function stopTyping() {
+  socket.emit("stopTyping", username);
+}
+
+socket.on("message", ({ username, message, time, profilePic }) => {
+  const msgEl = document.createElement("div");
+  msgEl.classList.add("message");
+
+  msgEl.innerHTML = `
+    <img src="${profilePic}" alt="User" />
+    <div class="message-content">
+      <div class="meta"><strong>${username}</strong> • ${time}</div>
+      <div>${message}</div>
+    </div>
+  `;
+  messages.appendChild(msgEl);
+  messages.scrollTop = messages.scrollHeight;
+});
+
+socket.on("updateUserList", (users) => {
+  userList.innerHTML = "";
+  users.forEach((user) => {
+    const li = document.createElement("li");
+    li.innerText = user.username;
+    userList.appendChild(li);
+  });
+});
+
+socket.on("typing", (user) => {
+  typingIndicator.innerText = `${user} is typing...`;
+});
+
+socket.on("stopTyping", () => {
+  typingIndicator.innerText = "";
+});

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ChatterUp</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="overlay">
+      <div class="onboarding">
+        <h2>Welcome to ChatterUp</h2>
+        <input type="text" id="usernameInput" placeholder="Enter your name" />
+        <button id="startChat">Join Chat</button>
+      </div>
+    </div>
+
+    <div class="container" id="chatContainer" style="display: none">
+      <aside class="sidebar">
+        <h3>Online Users</h3>
+        <ul id="userList"></ul>
+      </aside>
+
+      <main class="chatbox">
+        <header class="chat-header">
+          <h2 id="welcomeMsg">Welcome!</h2>
+        </header>
+
+        <div id="messages" class="messages"></div>
+        <p id="typingIndicator" class="typing-indicator"></p>
+
+        <form id="messageForm" class="input-area">
+          <input
+            id="messageInput"
+            type="text"
+            autocomplete="off"
+            placeholder="Type a message..."
+          />
+          <button type="submit">Send</button>
+        </form>
+      </main>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
