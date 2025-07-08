@@ -13,7 +13,6 @@ body {
   font-family: "Segoe UI", sans-serif;
   background-color: #d9fdd3;
   height: 100%;
-  overflow: hidden;
 }
 
 #overlay {
@@ -102,7 +101,7 @@ body {
   display: flex;
   flex-direction: column;
   background: #e5ddd5;
-  height: 100%;
+  height: 100dvh;
   position: relative;
 }
 
