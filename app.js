@@ -28,18 +28,18 @@ let users = [];
 io.on("connection", async (socket) => {
   console.log("🔌 New client connected");
 
-  const messages = await Message.find().sort({ createdAt: 1 }).limit(100);
-  messages.forEach((msg) => {
-    socket.emit("message", msg);
-  });
-
-  socket.on("join", ({ username }) => {
+  socket.on("join", async ({ username }) => {
     const profilePic = `https://api.dicebear.com/6.x/bottts-neutral/svg?seed=${username}`;
     const user = { id: socket.id, username, profilePic };
     users.push(user);
 
     socket.broadcast.emit("systemMessage", `${username} joined the chat`);
     io.emit("updateUserList", users);
+
+    const messages = await Message.find().sort({ createdAt: 1 }).limit(100);
+    messages.forEach((msg) => {
+      socket.emit("message", msg);
+    });
   });
 
   socket.on("chatMessage", async (msg) => {
