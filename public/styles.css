@@ -1,3 +1,8 @@
+html,
+body {
+  height: 100%;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -7,7 +12,7 @@
 body {
   font-family: "Segoe UI", sans-serif;
   background-color: #d9fdd3;
-  height: 100vh;
+  height: 100%;
   overflow: hidden;
 }
 
@@ -219,7 +224,7 @@ body {
   }
 
   .chatbox {
-    height: 100vh;
+    height: 100%;
   }
 
   .message-content {
