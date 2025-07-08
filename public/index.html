@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ChatterUp</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -16,14 +20,17 @@
     </div>
 
     <div class="container" id="chatContainer" style="display: none">
-      <aside class="sidebar">
-        <h3>Online Users</h3>
+      <aside class="sidebar hidden">
+        <h3>Online</h3>
         <ul id="userList"></ul>
       </aside>
 
       <main class="chatbox">
         <header class="chat-header">
           <h2 id="welcomeMsg">Welcome!</h2>
+          <button id="toggleUsers" class="users-btn">
+            <i class="fas fa-users"></i>
+          </button>
         </header>
 
         <div id="messages" class="messages"></div>
@@ -34,9 +41,9 @@
             id="messageInput"
             type="text"
             autocomplete="off"
-            placeholder="Type a message..."
+            placeholder="Type a message"
           />
-          <button type="submit">Send</button>
+          <button type="submit">➤</button>
         </form>
       </main>
     </div>

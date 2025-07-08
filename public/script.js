@@ -9,6 +9,7 @@ const messageInput = document.getElementById("messageInput");
 const messages = document.getElementById("messages");
 const userList = document.getElementById("userList");
 const typingIndicator = document.getElementById("typingIndicator");
+const toggleUsers = document.getElementById("toggleUsers");
 
 let username = "";
 let typingTimeout = null;
@@ -58,6 +59,14 @@ socket.on("message", ({ username, message, time, profilePic }) => {
   messages.scrollTop = messages.scrollHeight;
 });
 
+socket.on("systemMessage", (text) => {
+  const sysMsgEl = document.createElement("div");
+  sysMsgEl.classList.add("system-message");
+  sysMsgEl.innerText = text;
+  messages.appendChild(sysMsgEl);
+  messages.scrollTop = messages.scrollHeight;
+});
+
 socket.on("updateUserList", (users) => {
   userList.innerHTML = "";
   users.forEach((user) => {
@@ -73,4 +82,8 @@ socket.on("typing", (user) => {
 
 socket.on("stopTyping", () => {
   typingIndicator.innerText = "";
+});
+
+toggleUsers.addEventListener("click", () => {
+  document.querySelector(".sidebar").classList.toggle("hidden");
 });

@@ -6,7 +6,9 @@
 
 body {
   font-family: "Segoe UI", sans-serif;
-  background-color: #f0f2f5;
+  background-color: #d9fdd3;
+  height: 100vh;
+  overflow: hidden;
 }
 
 #overlay {
@@ -19,6 +21,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 10;
 }
 
 .onboarding {
@@ -26,116 +29,147 @@ body {
   padding: 30px 40px;
   border-radius: 12px;
   text-align: center;
+  width: 90%;
+  max-width: 400px;
 }
 
-.onboarding input {
-  padding: 10px;
+.onboarding input,
+.onboarding button {
+  width: 100%;
   margin-top: 10px;
-  width: 80%;
+  padding: 12px;
   border-radius: 8px;
   border: 1px solid #ccc;
+  font-size: 1rem;
 }
 
 .onboarding button {
-  margin-top: 15px;
-  padding: 10px 20px;
-  border: none;
-  background-color: #4caf50;
+  background-color: #25d366;
   color: white;
-  border-radius: 8px;
+  border: none;
   cursor: pointer;
 }
 
 .container {
   display: flex;
   height: 100vh;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .sidebar {
   width: 250px;
-  background-color: #fff;
-  border-right: 1px solid #ddd;
+  background-color: #f0f2f5;
+  border-right: 1px solid #ccc;
   padding: 20px;
   overflow-y: auto;
+  transition: transform 0.3s ease;
 }
 
-.sidebar h3 {
-  margin-bottom: 15px;
-}
-
-#userList li {
-  margin-bottom: 10px;
-  list-style: none;
-}
-
-#userList li::before {
-  content: "🟢 ";
+.sidebar.hidden {
+  display: none;
 }
 
 .chatbox {
   flex: 1;
   display: flex;
   flex-direction: column;
+  background: #e5ddd5;
+  height: 100%;
+  position: relative;
 }
 
 .chat-header {
-  padding: 20px;
-  background-color: #4caf50;
+  padding: 15px;
+  background-color: #075e54;
   color: white;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.users-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: white;
+  cursor: pointer;
+}
+
+.users-btn i {
+  font-size: 20px;
 }
 
 .messages {
   flex: 1;
-  padding: 20px;
+  padding: 10px;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .message {
   display: flex;
-  margin-bottom: 15px;
-  align-items: flex-start;
+  margin-bottom: 10px;
+  align-items: flex-end;
 }
 
 .message img {
-  width: 40px;
-  height: 40px;
-  margin-right: 10px;
+  width: 32px;
+  height: 32px;
+  margin-right: 8px;
   border-radius: 50%;
 }
 
 .message-content {
-  background-color: #e0e0e0;
+  background-color: #dcf8c6;
   padding: 10px 15px;
-  border-radius: 10px;
-  max-width: 60%;
+  border-radius: 10px 10px 0 10px;
+  max-width: 80%;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  font-size: 14px;
 }
 
 .message-content .meta {
-  font-size: 12px;
+  font-size: 11px;
   color: #555;
+  margin-bottom: 5px;
+}
+
+.system-message {
+  text-align: center;
+  font-size: 13px;
+  color: #888;
+  margin: 10px 0;
+  font-style: italic;
 }
 
 .input-area {
   display: flex;
-  padding: 15px;
+  padding: 10px;
   border-top: 1px solid #ddd;
   background-color: #fff;
+  align-items: center;
 }
 
 #messageInput {
   flex: 1;
-  padding: 12px;
-  border-radius: 8px;
+  padding: 10px 12px;
+  border-radius: 20px;
   border: 1px solid #ccc;
+  font-size: 1rem;
 }
 
 .input-area button {
   margin-left: 10px;
-  padding: 12px 20px;
-  background-color: #4caf50;
+  padding: 10px 16px;
+  background-color: #25d366;
   color: white;
+  font-size: 1.2rem;
   border: none;
-  border-radius: 8px;
+  border-radius: 50%;
   cursor: pointer;
 }
 
@@ -143,4 +177,36 @@ body {
   padding: 0 20px;
   font-style: italic;
   color: #888;
+  font-size: 13px;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 60px;
+    right: 0;
+    width: 250px;
+    height: calc(100% - 60px);
+    background-color: #fff;
+    z-index: 20;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+  }
+
+  .container {
+    flex-direction: column;
+  }
+
+  .chatbox {
+    height: 100vh;
+  }
+
+  .message-content {
+    max-width: 95%;
+  }
+
+  .input-area button {
+    border-radius: 50%;
+    padding: 8px 12px;
+  }
 }
