@@ -71,6 +71,27 @@ body {
   display: none;
 }
 
+#userList {
+  list-style: none;
+  padding: 0;
+}
+
+.user-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #333;
+}
+
+.online-dot {
+  width: 10px;
+  height: 10px;
+  background-color: #25d366;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
 .chatbox {
   flex: 1;
   display: flex;
@@ -180,7 +201,7 @@ body {
   font-size: 13px;
 }
 
-/* Mobile responsive */
+/* Mobile Responsive */
 @media (max-width: 768px) {
   .sidebar {
     position: fixed;

@@ -70,9 +70,15 @@ socket.on("systemMessage", (text) => {
 socket.on("updateUserList", (users) => {
   userList.innerHTML = "";
   users.forEach((user) => {
-    const li = document.createElement("li");
-    li.innerText = user.username;
-    userList.appendChild(li);
+    const userEl = document.createElement("div");
+    userEl.classList.add("user-item");
+
+    userEl.innerHTML = `
+      <span class="online-dot"></span>
+      <span class="user-name">${user.username}</span>
+    `;
+
+    userList.appendChild(userEl);
   });
 });
 
