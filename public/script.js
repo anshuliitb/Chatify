@@ -14,6 +14,11 @@ const toggleUsers = document.getElementById("toggleUsers");
 let username = "";
 let typingTimeout = null;
 
+const joinTune = new Audio("/sounds/join.wav");
+const msgTune = new Audio("/sounds/msg.mp3");
+joinTune.volume = 0.5;
+msgTune.volume = 0.5;
+
 startChat.addEventListener("click", () => {
   username = usernameInput.value.trim();
   if (username) {
@@ -43,6 +48,13 @@ messageInput.addEventListener("input", () => {
 function stopTyping() {
   socket.emit("stopTyping", username);
 }
+
+socket.on("joinSound", () => {
+  joinTune.play().catch((err) => console.error("Playback failed:", err));
+});
+socket.on("msgSound", () => {
+  msgTune.play().catch((err) => console.error("Playback failed:", err));
+});
 
 socket.on("message", ({ username, message, time, profilePic }) => {
   const msgEl = document.createElement("div");

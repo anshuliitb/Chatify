@@ -40,6 +40,8 @@ io.on("connection", async (socket) => {
     messages.forEach((msg) => {
       socket.emit("message", msg);
     });
+
+    socket.broadcast.emit("joinSound");
   });
 
   socket.on("chatMessage", async (msg) => {
@@ -55,6 +57,8 @@ io.on("connection", async (socket) => {
 
     await Message.create(chat);
     io.emit("message", chat);
+
+    socket.broadcast.emit("msgSound");
   });
 
   socket.on("typing", (username) => {
