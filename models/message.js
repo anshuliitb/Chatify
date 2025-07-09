@@ -4,12 +4,10 @@ const messageSchema = new mongoose.Schema(
   {
     username: String,
     message: String,
-    profilePic: String,
     time: String,
+    profilePic: String,
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
 
 export const Message = mongoose.model("Message", messageSchema);
