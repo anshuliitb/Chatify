@@ -1,5 +1,5 @@
 {
-  "name": "new",
+  "name": "chatify-project",
   "version": "1.0.0",
   "main": "script.js",
   "scripts": {
@@ -7,9 +7,9 @@
   },
   "keywords": [],
   "type": "module",
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "author": "Anshul Mahor",
+  "license": "MIT",
+  "description": "Chatify is a real-time chat application built with Node.js, Express.js, Socket.IO, and MongoDB. It features user onboarding, profile picture uploads, chat history, typing indicators, and audio notifications, all within a modular and interactive frontend.",
   "dependencies": {
     "dotenv": "^16.4.5",
     "express": "^5.1.0",
