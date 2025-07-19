@@ -81,11 +81,21 @@ body {
 }
 
 .user-item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 12px;
+  margin: 12px 0;
   font-size: 14px;
   color: #333;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.user-left {
+  display: flex;
+  align-items: center;
 }
 
 .online-dot {
@@ -94,6 +104,24 @@ body {
   background-color: #25d366;
   border-radius: 50%;
   margin-right: 8px;
+}
+
+.video-call-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.video-call-btn:hover {
+  background-color: #e0f7e9;
+}
+
+.video-call-btn i {
+  font-size: 18px;
+  color: #25d366;
 }
 
 .chatbox {
@@ -244,4 +272,82 @@ body {
   font-weight: 500;
   font-style: normal;
   opacity: 0.9;
+}
+
+/* Video Call Popup */
+
+.video-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(20, 20, 20, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.video-popup.hidden {
+  display: none;
+}
+
+.popup-content {
+  position: relative;
+  background: #1e1e2f;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+}
+
+.video-container {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px 0;
+}
+
+.video-container video {
+  width: 45%;
+  height: 240px;
+  background: black;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+}
+
+.popup-controls button {
+  margin: 5px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  background-color: #4c68d7;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.popup-controls button:hover {
+  background-color: #3a54b1;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  color: white;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: #ff4b4b;
+}
+
+.user-name {
+  margin-right: 5px;
 }

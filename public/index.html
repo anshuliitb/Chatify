@@ -24,11 +24,13 @@
     </div>
 
     <div class="container" id="chatContainer" style="display: none">
+      <!-- online users sidebar -->
       <aside class="sidebar hidden">
         <h3>Online</h3>
         <div id="userList"></div>
       </aside>
 
+      <!-- chatbox -->
       <main class="chatbox">
         <header class="chat-header">
           <h2 id="welcomeMsg">Welcome!</h2>
@@ -38,6 +40,7 @@
         </header>
 
         <div id="messages" class="messages"></div>
+
         <p id="typingIndicator" class="typing-indicator"></p>
 
         <form id="messageForm" class="input-area">
@@ -50,6 +53,22 @@
           <button type="submit">➤</button>
         </form>
       </main>
+    </div>
+
+    <!-- video popup -->
+    <div id="videoPopup" class="video-popup hidden">
+      <div class="popup-content">
+        <button id="closePopupBtn" class="close-btn">✖</button>
+        <h3>Video Call</h3>
+        <div class="video-container">
+          <video id="localVideo" autoplay muted playsinline></video>
+          <video id="remoteVideo" autoplay playsinline></video>
+        </div>
+        <div class="popup-controls">
+          <button id="callBtn">📞 Call</button>
+          <button id="disconnectBtn">❌ Disconnect</button>
+        </div>
+      </div>
     </div>
 
     <script src="/socket.io/socket.io.js"></script>

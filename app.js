@@ -24,8 +24,12 @@ const setUsers = (updater) => {
 
 // Socket.IO connection
 io.on("connection", (socket) => {
-  console.log("🔌 Client connected");
+  console.log("✔️  Client connected with socket ID:", socket.id);
   registerSocketListeners(io, socket, getUsers, setUsers);
+
+  socket.on("disconnect", () => {
+    console.log("✖️  Client disconnected with socket ID:", socket.id);
+  });
 });
 
 export default server;
