@@ -1,6 +1,6 @@
 import { showVideoPopup } from "../../videoCallPopup.js";
 
-export default function onUpdateUserList(users) {
+export default function onUpdateUserList(users, mySocketId) {
   const userList = document.getElementById("userList");
   userList.innerHTML = "";
 
@@ -15,17 +15,21 @@ export default function onUpdateUserList(users) {
         <div class="user-left">
           <span class="online-dot"></span>
           <span class="user-name">${user.username}</span>
-        </div>
-        <button class="video-call-btn" data-socketid="${user.id}" title="Video Call">
-          <i class="fas fa-video"></i>
-        </button>
+        </div>${
+          user.id != mySocketId
+            ? '<button class="video-call-btn" title="Video Call"><i class="fas fa-video"></i></button>'
+            : ""
+        }
       </div>
     `;
 
-    userEl.querySelector(".video-call-btn").addEventListener("click", () => {
-      const socketId = user.id;
-      showVideoPopup(socketId);
-    });
+    const callBtn = userEl.querySelector(".video-call-btn");
+    if (callBtn) {
+      callBtn.addEventListener("click", () => {
+        const socketId = user.id;
+        showVideoPopup(socketId);
+      });
+    }
 
     userList.appendChild(userEl);
   });

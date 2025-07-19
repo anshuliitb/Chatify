@@ -27,6 +27,30 @@ io.on("connection", (socket) => {
   console.log("✔️  Client connected with socket ID:", socket.id);
   registerSocketListeners(io, socket, getUsers, setUsers);
 
+  // -----
+
+  socket.on("offer", ({ offer, to }) => {
+    socket.to(to).emit("offer", { offer, from: socket.id });
+  });
+
+  socket.on("answer", ({ answer, to }) => {
+    socket.to(to).emit("answer", { answer });
+  });
+
+  socket.on("ice-candidate", ({ candidate, to }) => {
+    socket.to(to).emit("ice-candidate", { candidate });
+  });
+
+  socket.on("hang-up", ({ to }) => {
+    socket.to(to).emit("hang-up");
+  });
+
+  socket.on("call-declined", ({ to }) => {
+    socket.to(to).emit("call-declined", { from: socket.id });
+  });
+
+  // -------
+
   socket.on("disconnect", () => {
     console.log("✖️  Client disconnected with socket ID:", socket.id);
   });

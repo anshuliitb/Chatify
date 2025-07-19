@@ -7,6 +7,9 @@ export default async function onJoin(socket, io, getUsers, setUsers) {
     setUsers((prev) => [...prev, newUser]);
 
     socket.broadcast.emit("systemMessage", `${username} joined the chat`);
+
+    socket.emit("setMySocketId", socket.id);
+
     io.emit("updateUserList", getUsers());
 
     const messages = await Message.find().sort({ createdAt: 1 }).limit(100);

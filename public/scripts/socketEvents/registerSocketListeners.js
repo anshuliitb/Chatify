@@ -6,12 +6,20 @@ import onUpdateUserList from "./socketListeners/onUpdateUserList.js";
 import onTyping from "./socketListeners/onTyping.js";
 import onStopTyping from "./socketListeners/onStopTyping.js";
 
+let mySocketId = null;
+
 export function registerSocketListeners(socket) {
   socket.on("joinSound", onJoinSound);
   socket.on("msgSound", onMsgSound);
   socket.on("message", onMessage);
   socket.on("systemMessage", onSystemMessage);
-  socket.on("updateUserList", onUpdateUserList);
+  // ✅ Save your own socket ID once
+  socket.on("setMySocketId", (id) => {
+    mySocketId = id;
+  });
+  socket.on("updateUserList", (users) => {
+    onUpdateUserList(users, mySocketId);
+  });
   socket.on("typing", onTyping);
   socket.on("stopTyping", onStopTyping);
 }
