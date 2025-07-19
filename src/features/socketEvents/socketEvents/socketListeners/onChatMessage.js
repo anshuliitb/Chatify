@@ -1,4 +1,4 @@
-import { Message } from "../../models/message.js";
+import { Message } from "../../models/message.model.js";
 
 export default function onChatMessage(socket, io, users) {
   socket.on("chatMessage", async (msg) => {
@@ -8,7 +8,7 @@ export default function onChatMessage(socket, io, users) {
     const chat = {
       username: user.username,
       message: msg,
-      time: new Date().toLocaleTimeString("en-IN", {
+      time: new Date().toLocaleString("en-IN", {
         timeZone: "Asia/Kolkata",
       }),
       profilePic: user.profilePic,

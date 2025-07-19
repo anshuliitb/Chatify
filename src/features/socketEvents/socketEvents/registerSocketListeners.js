@@ -4,10 +4,10 @@ import onTyping from "./socketListeners/onTyping.js";
 import onStopTyping from "./socketListeners/onStopTyping.js";
 import onDisconnect from "./socketListeners/onDisconnect.js";
 
-export function registerSocketListeners(io, socket, users, setUsers) {
-  onJoin(socket, io, users, setUsers);
-  onChatMessage(socket, io, users);
+export function registerSocketListeners(io, socket, getUsers, setUsers) {
+  onJoin(socket, io, getUsers, setUsers);
+  onChatMessage(socket, io, getUsers);
   onTyping(socket);
   onStopTyping(socket);
-  onDisconnect(socket, io, users, setUsers);
+  onDisconnect(socket, io, getUsers, setUsers);
 }

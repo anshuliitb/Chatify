@@ -1,13 +1,13 @@
-import { Message } from "../../models/message.js";
+import { Message } from "../../models/message.model.js";
 
-export default async function onJoin(socket, io, users, setUsers) {
+export default async function onJoin(socket, io, getUsers, setUsers) {
   socket.on("join", async ({ username }) => {
     const profilePic = `https://api.dicebear.com/6.x/bottts-neutral/svg?seed=${username}`;
-    const user = { id: socket.id, username, profilePic };
-    setUsers((prev) => [...prev, user]);
+    const newUser = { id: socket.id, username, profilePic };
+    setUsers((prev) => [...prev, newUser]);
 
     socket.broadcast.emit("systemMessage", `${username} joined the chat`);
-    io.emit("updateUserList", users());
+    io.emit("updateUserList", getUsers());
 
     const messages = await Message.find().sort({ createdAt: 1 }).limit(100);
     messages.forEach((msg) => {

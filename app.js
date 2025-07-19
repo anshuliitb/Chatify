@@ -3,11 +3,7 @@ import { createServer } from "http";
 import { Server } from "socket.io";
 import path from "path";
 import { fileURLToPath } from "url";
-import dotenv from "dotenv";
-import { connectDB } from "./config/db.js";
-import { registerSocketListeners } from "./socketEvents/registerSocketListeners.js";
-
-dotenv.config();
+import { registerSocketListeners } from "./src/features/socketEvents/socketEvents/registerSocketListeners.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -20,22 +16,16 @@ const io = new Server(server);
 app.use(express.static(path.join(__dirname, "public")));
 
 // Manage users
-let _users = [];
-const users = () => _users;
+let users = [];
+const getUsers = () => users;
 const setUsers = (updater) => {
-  _users = typeof updater === "function" ? updater(_users) : updater;
+  users = typeof updater === "function" ? updater(users) : updater;
 };
 
 // Socket.IO connection
 io.on("connection", (socket) => {
   console.log("🔌 Client connected");
-  registerSocketListeners(io, socket, users, setUsers);
+  registerSocketListeners(io, socket, getUsers, setUsers);
 });
 
-// Start server
-const PORT = process.env.PORT || 3000;
-server.listen(PORT, async () => {
-  console.log(`🚀 Server running at port: ${PORT}`);
-  // Connect to DB
-  await connectDB();
-});
+export default server;
