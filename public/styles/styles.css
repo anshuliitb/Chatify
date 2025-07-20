@@ -412,6 +412,8 @@ body {
 @media (max-width: 600px) {
   .popup-content {
     padding: 16px 12px;
+    max-height: 95vh; /* Prevents overflow */
+    overflow-y: auto; /* Enables scrolling if needed */
   }
 
   .video-container {
@@ -421,19 +423,20 @@ body {
 
   .video-container video {
     width: 100%;
-    height: auto;
+    height: auto; /* Let height adjust */
+    max-height: 200px; /* Prevents from being too tall */
   }
 
   .popup-controls {
     flex-direction: column;
     gap: 12px;
-    align-items: stretch; /* ensure full width */
+    align-items: stretch;
     width: 100%;
   }
 
   .popup-controls button {
-    width: 100%; /* make buttons span full width */
-    justify-content: center; /* center icon + text */
+    width: 100%;
+    justify-content: center;
   }
 
   .close-btn {
