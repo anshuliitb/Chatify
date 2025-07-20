@@ -161,32 +161,15 @@ socket.on("ice-candidate", ({ candidate }) => {
 });
 
 socket.on("hang-up", () => {
-  const popup = document.getElementById("videoPopup");
-  popup.classList.add("hidden"); // 👈 Moved to the top
-
-  if (peerConnection) {
-    peerConnection.close();
-    peerConnection = null;
-  }
-
-  if (remoteVideo && remoteVideo.srcObject) {
-    remoteVideo.srcObject.getTracks().forEach((track) => track.stop());
-    remoteVideo.srcObject = null;
-  }
-
-  // ✅ Show call button again
-  startCallBtn.style.display = "inline-block";
-
-  // ✅ Delay alert slightly so DOM has time to update
+  disconnectCall();
   setTimeout(() => {
     alert("📴 Remote user disconnected the call.");
-  }, 500); // small delay (~1 frame)
+  }, 500);
 });
 
 socket.on("call-declined", ({ from }) => {
   alert("Call declined by the remote user!");
-  // ✅ Show call button again in case of decline
-  startCallBtn.style.display = "inline-block";
+  disconnectCall(); // ✅ Optional: ensures full cleanup
 });
 
 socket.on("disconnect", () => {
