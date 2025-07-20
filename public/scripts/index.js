@@ -78,6 +78,9 @@ document.addEventListener("DOMContentLoaded", () => {
       remoteVideo.srcObject.getTracks().forEach((track) => track.stop());
       remoteVideo.srcObject = null;
     }
+
+    const videoPopup = document.getElementById("videoPopup");
+    videoPopup.classList.add("hidden");
   }
 
   // Start Call Button Click
@@ -119,37 +122,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Received offer from remote
   socket.on("offer", async ({ offer, from }) => {
-    const result = confirm("Do you want to pickup call?");
-    if (result) {
-      try {
-        if (!localStream) {
-          localStream = await navigator.mediaDevices.getUserMedia({
-            video: true,
-            audio: true,
-          });
-          localVideo.srcObject = localStream;
-        }
-
-        const videoPopup = document.getElementById("videoPopup");
-        videoPopup.classList.remove("hidden");
-
-        createPeerConnection(from);
-
-        localStream.getTracks().forEach((track) => {
-          peerConnection.addTrack(track, localStream);
+    try {
+      if (!localStream) {
+        localStream = await navigator.mediaDevices.getUserMedia({
+          video: true,
+          audio: true,
         });
-
-        await peerConnection.setRemoteDescription(offer);
-
-        const answer = await peerConnection.createAnswer();
-        await peerConnection.setLocalDescription(answer);
-
-        socket.emit("answer", { answer, to: from });
-      } catch (err) {
-        console.error("Error handling offer:", err);
+        localVideo.srcObject = localStream;
       }
-    } else {
-      socket.emit("call-declined", { to: from });
+
+      const videoPopup = document.getElementById("videoPopup");
+      videoPopup.classList.remove("hidden");
+      videoPopup.querySelector("#callBtn").style.display = "none";
+
+      createPeerConnection(from);
+
+      localStream.getTracks().forEach((track) => {
+        peerConnection.addTrack(track, localStream);
+      });
+
+      await peerConnection.setRemoteDescription(offer);
+
+      const answer = await peerConnection.createAnswer();
+      await peerConnection.setLocalDescription(answer);
+
+      socket.emit("answer", { answer, to: from });
+    } catch (err) {
+      console.error("Error handling offer:", err);
     }
   });
 
