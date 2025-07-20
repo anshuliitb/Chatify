@@ -4,7 +4,7 @@ import onTyping from "./socketListeners/onTyping.js";
 import onStopTyping from "./socketListeners/onStopTyping.js";
 import onDisconnect from "./socketListeners/onDisconnect.js";
 
-export function registerSocketListeners(io, socket, getUsers, setUsers) {
+export function registerChattingListeners(io, socket, getUsers, setUsers) {
   onJoin(socket, io, getUsers, setUsers);
   onChatMessage(socket, io, getUsers);
   onTyping(socket);

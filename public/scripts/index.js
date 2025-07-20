@@ -117,6 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const popup = document.getElementById("videoPopup");
     const toSocketId = popup.dataset.socketId;
     socket.emit("hang-up", { to: toSocketId });
+
     disconnectCall();
   };
 
@@ -133,7 +134,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const videoPopup = document.getElementById("videoPopup");
       videoPopup.classList.remove("hidden");
-      videoPopup.querySelector("#callBtn").style.display = "none";
 
       createPeerConnection(from);
 
