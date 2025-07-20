@@ -107,6 +107,19 @@ startCallBtn.onclick = async () => {
   }
 };
 
+const closeBtn = document.getElementById("closePopupBtn");
+closeBtn.onclick = () => {
+  const popup = document.getElementById("videoPopup");
+  const toSocketId = popup.dataset.socketId;
+
+  // Only emit hang-up if a call is in progress
+  if (toSocketId && peerConnection) {
+    socket.emit("hang-up", { to: toSocketId });
+  }
+
+  disconnectCall(); // Always clean up locally
+};
+
 hangUpBtn.onclick = () => {
   const popup = document.getElementById("videoPopup");
   const toSocketId = popup.dataset.socketId;
@@ -164,7 +177,7 @@ socket.on("hang-up", () => {
   disconnectCall();
   setTimeout(() => {
     alert("📴 Remote user disconnected the call.");
-  }, 500);
+  }, 800);
 });
 
 socket.on("call-declined", ({ from }) => {

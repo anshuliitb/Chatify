@@ -61,9 +61,16 @@
         <button id="closePopupBtn" class="close-btn">✖</button>
         <h3>Video Call</h3>
         <div class="video-container">
-          <video id="localVideo" autoplay muted playsinline></video>
-          <video id="remoteVideo" autoplay playsinline></video>
+          <div class="video-wrapper">
+            <video id="localVideo" autoplay muted playsinline></video>
+            <p class="video-username" id="localUsernameLabel">You</p>
+          </div>
+          <div class="video-wrapper">
+            <video id="remoteVideo" autoplay playsinline></video>
+            <p class="video-username" id="remoteUsernameLabel">Remote User</p>
+          </div>
         </div>
+
         <div class="popup-controls">
           <button id="callBtn"><i class="fas fa-phone"></i> Call</button>
           <button id="disconnectBtn">

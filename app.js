@@ -36,7 +36,7 @@ io.on("connection", (socket) => {
   console.log("✔️  Client connected:", socket.id);
 
   registerChattingListeners(io, socket, getUsers, setUsers);
-  registerWebRTCListeners(socket);
+  registerWebRTCListeners(socket, io, getUsers, setUsers);
 
   socket.on("disconnect", () => {
     console.log("✖️  Client disconnected:", socket.id);

@@ -1,35 +1,31 @@
-html,
-body {
-  height: 100%;
-}
-
+/* ================= Base Styles ================= */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+html,
 body {
+  height: 100%;
   font-family: "Segoe UI", sans-serif;
   background-color: #d9fdd3;
-  height: 100%;
 }
 
+/* ================= Overlay ================= */
 #overlay {
   position: fixed;
+  inset: 0;
   background: rgba(0, 0, 0, 0.75);
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 10;
 }
 
+/* ================= Onboarding Form ================= */
 .onboarding {
-  background: white;
+  background: #fff;
   padding: 30px 40px;
   border-radius: 12px;
   text-align: center;
@@ -43,25 +39,35 @@ body {
   margin-top: 10px;
   padding: 12px;
   border-radius: 8px;
-  border: 1px solid #ccc;
   font-size: 1rem;
+  border: 1px solid #ccc;
 }
 
 .onboarding button {
   background-color: #25d366;
-  color: white;
+  color: #fff;
   border: none;
   cursor: pointer;
 }
 
+.developer-credit {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #333;
+  text-align: center;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+/* ================= Layout ================= */
 .container {
   display: flex;
   height: 100vh;
   width: 100%;
-  max-width: 100%;
   overflow: hidden;
 }
 
+/* ========== Sidebar ========== */
 .sidebar {
   width: 250px;
   background-color: #f0f2f5;
@@ -90,7 +96,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
 }
 
 .user-left {
@@ -109,9 +114,9 @@ body {
 .video-call-btn {
   background: none;
   border: none;
-  cursor: pointer;
   padding: 6px;
   border-radius: 6px;
+  cursor: pointer;
   transition: background 0.2s;
 }
 
@@ -124,19 +129,19 @@ body {
   color: #25d366;
 }
 
+/* ========== Chatbox ========== */
 .chatbox {
   flex: 1;
   display: flex;
   flex-direction: column;
   background: #e5ddd5;
-  height: 100dvh;
   position: relative;
 }
 
 .chat-header {
   padding: 15px;
   background-color: #075e54;
-  color: white;
+  color: #fff;
   font-weight: bold;
   display: flex;
   align-items: center;
@@ -147,12 +152,8 @@ body {
   background: none;
   border: none;
   font-size: 20px;
-  color: white;
+  color: #fff;
   cursor: pointer;
-}
-
-.users-btn i {
-  font-size: 20px;
 }
 
 .messages {
@@ -165,15 +166,15 @@ body {
 
 .message {
   display: flex;
-  margin-bottom: 10px;
   align-items: flex-end;
+  margin-bottom: 10px;
 }
 
 .message img {
   width: 32px;
   height: 32px;
-  margin-right: 8px;
   border-radius: 50%;
+  margin-right: 8px;
 }
 
 .message-content {
@@ -181,8 +182,8 @@ body {
   padding: 10px 15px;
   border-radius: 10px 10px 0 10px;
   max-width: 80%;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   font-size: 14px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .message-content .meta {
@@ -195,87 +196,46 @@ body {
   text-align: center;
   font-size: 13px;
   color: #888;
-  margin: 10px 0;
   font-style: italic;
+  margin: 10px 0;
 }
 
+.typing-indicator {
+  padding: 0 20px;
+  font-style: italic;
+  font-size: 13px;
+  color: #888;
+}
+
+/* ========== Input Area ========== */
 .input-area {
   display: flex;
+  align-items: center;
   padding: 10px;
   border-top: 1px solid #ddd;
   background-color: #fff;
-  align-items: center;
 }
 
 #messageInput {
   flex: 1;
   padding: 10px 12px;
-  border-radius: 20px;
-  border: 1px solid #ccc;
   font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 20px;
 }
 
 .input-area button {
   margin-left: 10px;
   padding: 10px 16px;
   background-color: #25d366;
-  color: white;
+  color: #fff;
   font-size: 1.2rem;
   border: none;
   border-radius: 50%;
   cursor: pointer;
 }
 
-.typing-indicator {
-  padding: 0 20px;
-  font-style: italic;
-  color: #888;
-  font-size: 13px;
-}
-
-/* Mobile Responsive */
-@media (max-width: 768px) {
-  .sidebar {
-    position: fixed;
-    top: 60px;
-    right: 0;
-    width: 250px;
-    height: calc(100% - 60px);
-    background-color: #fff;
-    z-index: 20;
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
-  }
-
-  .container {
-    flex-direction: column;
-  }
-
-  .chatbox {
-    height: 100%;
-  }
-
-  .message-content {
-    max-width: 95%;
-  }
-
-  .input-area button {
-    border-radius: 50%;
-    padding: 8px 12px;
-  }
-}
-
-.developer-credit {
-  margin-top: 20px;
-  font-size: 16px;
-  color: #333;
-  text-align: center;
-  font-weight: 500;
-  font-style: normal;
-  opacity: 0.9;
-}
-
-/* Enhanced Video Call Popup UI - Large & Responsive */
-
+/* ================= Video Popup ================= */
 .video-popup {
   position: fixed;
   inset: 0;
@@ -284,7 +244,7 @@ body {
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  animation: fadeIn 0.3s ease-out;
+  overflow-y: auto;
 }
 
 .video-popup.hidden {
@@ -293,61 +253,74 @@ body {
 
 .popup-content {
   background: #111827;
-  padding: 30px 40px;
+  color: #f0f0f0;
+  padding: 24px;
   border-radius: 16px;
+  width: 98%;
+  max-width: 1600px;
+  max-height: 98vh;
+  overflow-y: auto;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
-  width: 96%;
-  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
   text-align: center;
   position: relative;
-  color: #f0f0f0;
-  animation: slideUp 0.4s ease;
 }
 
 .popup-content h3 {
   font-size: 24px;
-  margin-bottom: 24px;
 }
 
 .video-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 24px;
-  width: 100%;
 }
 
-.video-container video {
-  flex: 1 1 48%;
-  max-width: 100%;
-  min-width: 300px;
-  height: 350px;
-  border-radius: 16px;
+.video-wrapper {
+  width: 45%;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.video-wrapper video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
   background: black;
+  border-radius: 12px;
   border: 3px solid #25d366;
   object-fit: cover;
 }
 
+.video-username {
+  margin-top: 10px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* ========== Popup Controls ========== */
 .popup-controls {
-  margin-top: 24px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 16px;
-  flex-wrap: wrap;
 }
 
 .popup-controls button {
-  background-color: #1f2937;
-  border: none;
-  color: #f1f1f1;
-  padding: 12px 20px;
-  font-size: 16px;
-  border-radius: 8px;
-  cursor: pointer;
   display: flex;
   align-items: center;
   gap: 8px;
+  padding: 12px 20px;
+  font-size: 16px;
+  background-color: #1f2937;
+  color: #f1f1f1;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
@@ -380,87 +353,87 @@ body {
   font-size: 24px;
   color: #f0f0f0;
   cursor: pointer;
-  transition: color 0.3s ease;
 }
 
 .close-btn:hover {
   color: #f87171;
 }
 
-/* Animations */
-@keyframes fadeIn {
-  from {
-    background: rgba(10, 10, 10, 0);
+/* ================= Responsive Design ================= */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 60px;
+    right: 0;
+    height: calc(100% - 60px);
+    z-index: 20;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
   }
-  to {
-    background: rgba(10, 10, 10, 0.85);
+
+  .container {
+    flex-direction: column;
+  }
+
+  .message-content {
+    max-width: 95%;
+  }
+
+  .input-area button {
+    padding: 8px 12px;
   }
 }
 
-@keyframes slideUp {
-  from {
-    transform: translateY(40px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-/* Mobile Responsive */
 @media (max-width: 600px) {
   .popup-content {
-    padding: 16px 12px;
+    padding: 16px;
+    width: 100%;
     max-height: 100vh;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
   }
 
   .video-container {
     flex-direction: column;
-    gap: 12px;
+    gap: 16px;
+  }
+
+  .video-wrapper {
     width: 100%;
   }
 
-  .video-container video {
-    width: 100%;
-    height: auto;
-    max-height: 40dvh; /* Use up to 45% of screen height */
-    border-radius: 12px;
+  .video-username {
+    font-size: 16px;
+    margin-top: 6px;
   }
 
   .popup-controls {
-    margin-top: 16px;
     flex-direction: column;
     gap: 12px;
-    align-items: stretch;
-    width: 100%;
+    margin-top: 16px;
   }
 
   .popup-controls button {
     width: 100%;
     justify-content: center;
-    font-size: 15px;
-    padding: 10px 0;
+    padding: 12px 0;
   }
 
   .close-btn {
-    top: 8px;
-    right: 12px;
     font-size: 22px;
+    right: 12px;
   }
 }
 
-/* Large screen boost */
 @media (min-width: 1280px) {
   .popup-content {
-    max-width: 1300px;
+    max-width: 1600px;
+    max-height: 98vh;
   }
 
-  .video-container video {
-    height: 400px;
+  .video-wrapper {
+    width: 42%;
+  }
+
+  .video-username {
+    font-size: 20px;
   }
 }

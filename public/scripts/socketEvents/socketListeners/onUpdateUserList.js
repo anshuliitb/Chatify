@@ -1,18 +1,20 @@
-function showVideoPopup(socketId) {
-  videoPopup.classList.remove("hidden");
-
-  videoPopup.dataset.socketId = socketId;
-}
-
 export default function onUpdateUserList(users, mySocketId) {
   const userList = document.getElementById("userList");
   userList.innerHTML = "";
 
+  function showVideoPopup(user) {
+    videoPopup.classList.remove("hidden");
+
+    videoPopup.dataset.socketId = user.id;
+    videoPopup.dataset.username = user.username;
+
+    const remoteUsernameLabel = document.getElementById("remoteUsernameLabel");
+    remoteUsernameLabel.textContent = user.username;
+  }
+
   users.forEach((user) => {
     const userEl = document.createElement("div");
     userEl.classList.add("user-item");
-
-    userEl.dataset.socketId = user.id;
 
     userEl.innerHTML = `
       <div class="user-info">
@@ -30,8 +32,7 @@ export default function onUpdateUserList(users, mySocketId) {
     const callBtn = userEl.querySelector(".video-call-btn");
     if (callBtn) {
       callBtn.addEventListener("click", () => {
-        const socketId = user.id;
-        showVideoPopup(socketId);
+        showVideoPopup(user);
       });
     }
 

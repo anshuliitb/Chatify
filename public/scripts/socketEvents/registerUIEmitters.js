@@ -18,6 +18,8 @@ export function registerUIEmitters(socket) {
       overlay.style.display = "none";
       chatContainer.style.display = "flex";
       welcomeMsg.innerText = `Welcome, ${username}!`;
+      const localUsernameLabel = document.getElementById("localUsernameLabel");
+      localUsernameLabel.textContent = username;
     }
   });
 
