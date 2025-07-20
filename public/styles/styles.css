@@ -428,7 +428,7 @@ body {
   .video-container video {
     width: 100%;
     height: auto;
-    max-height: 40vh; /* Use up to 45% of screen height */
+    max-height: 40dvh; /* Use up to 45% of screen height */
     border-radius: 12px;
   }
 

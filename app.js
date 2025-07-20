@@ -1,6 +1,7 @@
 import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
+import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
 import { registerChattingListeners } from "./src/features/socket/socketEvents/registerChattingListeners.js";
@@ -11,7 +12,14 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 const server = createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: "*", // or specific URL like "https://yourfrontend.com"
+    methods: ["GET", "POST"],
+  },
+});
+
+app.use(cors());
 
 // Serve static files
 app.use(express.static(path.join(__dirname, "public")));
