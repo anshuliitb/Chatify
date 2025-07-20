@@ -411,7 +411,7 @@ body {
 /* Mobile Responsive */
 @media (max-width: 600px) {
   .popup-content {
-    padding: 20px 16px;
+    padding: 16px 12px;
   }
 
   .video-container {
@@ -427,6 +427,19 @@ body {
   .popup-controls {
     flex-direction: column;
     gap: 12px;
+    align-items: stretch; /* ensure full width */
+    width: 100%;
+  }
+
+  .popup-controls button {
+    width: 100%; /* make buttons span full width */
+    justify-content: center; /* center icon + text */
+  }
+
+  .close-btn {
+    top: 8px;
+    right: 12px;
+    font-size: 22px;
   }
 }
 
