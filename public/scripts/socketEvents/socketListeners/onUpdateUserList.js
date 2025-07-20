@@ -1,4 +1,8 @@
-import { showVideoPopup } from "../../videoCallPopup.js";
+function showVideoPopup(socketId) {
+  videoPopup.classList.remove("hidden");
+
+  videoPopup.dataset.socketId = socketId;
+}
 
 export default function onUpdateUserList(users, mySocketId) {
   const userList = document.getElementById("userList");
