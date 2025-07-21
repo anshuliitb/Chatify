@@ -114,6 +114,7 @@ function disconnectCall() {
 startCallBtn.onclick = async () => {
   const popup = document.getElementById("videoPopup");
   const toSocketId = popup.dataset.socketId;
+  const username = popup.dataset.username;
   if (!toSocketId) return alert("Invalid recipient");
 
   try {
@@ -139,7 +140,7 @@ startCallBtn.onclick = async () => {
     await peerConnection.setLocalDescription(offer);
     console.log("📨 [startCall] Sending offer");
 
-    socket.emit("offer", { offer, to: toSocketId });
+    socket.emit("offer", { offer, to: toSocketId, username });
   } catch (err) {
     console.error("❌ [startCall] Error starting call:", err);
     alert("Could not access camera/mic.");
@@ -163,8 +164,8 @@ hangUpBtn.onclick = () => {
   disconnectCall();
 };
 
-socket.on("offer", async ({ offer, from }) => {
-  console.log("📞 [offer] Incoming offer from", from);
+socket.on("offer", async ({ offer, from, username }) => {
+  console.log("📞 [offer] Incoming offer from", from, username);
 
   try {
     console.log("🎙️ [offer] Getting local media...");
@@ -179,6 +180,8 @@ socket.on("offer", async ({ offer, from }) => {
     popup.classList.remove("hidden");
     popup.dataset.socketId = from;
     startCallBtn.style.display = "none";
+
+    popup.getElementById("remoteUsernameLabel").textContent = username;
 
     createPeerConnection(from);
 

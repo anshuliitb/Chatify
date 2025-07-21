@@ -1,6 +1,6 @@
 export const registerWebRTCListeners = (socket) => {
-  socket.on("offer", ({ offer, to }) => {
-    socket.to(to).emit("offer", { offer, from: socket.id });
+  socket.on("offer", ({ offer, to, username }) => {
+    socket.to(to).emit("offer", { offer, from: socket.id, username });
   });
 
   socket.on("answer", ({ answer, to }) => {
