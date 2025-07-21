@@ -166,7 +166,7 @@ hangUpBtn.onclick = () => {
 };
 
 socket.on("offer", async ({ offer, from, username }) => {
-  console.log("📞 [offer] Incoming offer from", from, username);
+  console.log("📞 [offer] Incoming offer from", from);
 
   try {
     console.log("🎙️ [offer] Getting local media...");
