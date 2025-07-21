@@ -166,8 +166,8 @@ hangUpBtn.onclick = () => {
 };
 
 socket.on("offer", async ({ offer, from, username }) => {
-  popup.querySelector("#remoteUsernameLabel").textContent = username;
   const popup = document.getElementById("videoPopup");
+  popup.querySelector("#remoteUsernameLabel").textContent = username;
   const localUsernameLabel = popup.querySelector(
     "#remoteUsernameLabel"
   ).textContent;
