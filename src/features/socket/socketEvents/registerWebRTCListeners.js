@@ -17,5 +17,6 @@ export const registerWebRTCListeners = (socket) => {
 
   socket.on("call-declined", ({ to, username }) => {
     socket.to(to).emit("call-declined", { to, username });
+    console.log("at server", username);
   });
 };
