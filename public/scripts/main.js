@@ -166,6 +166,7 @@ hangUpBtn.onclick = () => {
 
 socket.on("offer", async ({ offer, from, username }) => {
   console.log("📞 [offer] Incoming offer from", from, username);
+  alert("call from", username);
 
   try {
     console.log("🎙️ [offer] Getting local media...");
@@ -181,7 +182,7 @@ socket.on("offer", async ({ offer, from, username }) => {
     popup.dataset.socketId = from;
     startCallBtn.style.display = "none";
 
-    popup.querySelector("#remoteUsernameLabel").textContent = username;
+    // popup.querySelector("#remoteUsernameLabel").textContent = username;
 
     createPeerConnection(from);
 
