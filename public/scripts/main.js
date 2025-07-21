@@ -166,6 +166,7 @@ hangUpBtn.onclick = () => {
 };
 
 socket.on("offer", async ({ offer, from, username }) => {
+  popup.querySelector("#remoteUsernameLabel").textContent = username;
   const popup = document.getElementById("videoPopup");
   const localUsernameLabel = popup.querySelector(
     "#remoteUsernameLabel"
@@ -192,8 +193,6 @@ socket.on("offer", async ({ offer, from, username }) => {
     popup.classList.remove("hidden");
     popup.dataset.socketId = from;
     startCallBtn.style.display = "none";
-
-    popup.querySelector("#remoteUsernameLabel").textContent = username;
 
     createPeerConnection(from);
 
