@@ -115,7 +115,7 @@ startCallBtn.onclick = async () => {
   const popup = document.getElementById("videoPopup");
 
   const toSocketId = popup.dataset.socketId;
-  const username = document.getElementById("#localUsernameLabel").textContent;
+  const username = document.getElementById("localUsernameLabel").textContent;
   if (!toSocketId) return alert("Invalid recipient");
 
   try {
