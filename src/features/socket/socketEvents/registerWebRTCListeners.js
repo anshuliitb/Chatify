@@ -15,7 +15,7 @@ export const registerWebRTCListeners = (socket) => {
     socket.to(to).emit("hang-up");
   });
 
-  socket.on("call-declined", ({ to }) => {
-    socket.to(to).emit("call-declined", { from: socket.id });
+  socket.on("call-declined", ({ to, username }) => {
+    socket.to(to).emit("call-declined", { username });
   });
 };
