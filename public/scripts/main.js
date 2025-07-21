@@ -16,6 +16,11 @@ let localStream = null;
 let remoteStream = null;
 let peerConnection = null;
 
+let remoteDescSet = false;
+let pendingCandidates = [];
+let callRetryTimeout = null;
+let retryAttempted = false;
+
 const config = {
   iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
 };
@@ -29,6 +34,12 @@ function createPeerConnection(toSocketId) {
     event.streams[0].getTracks().forEach((track) => {
       remoteStream.addTrack(track);
     });
+    console.log("✅ Remote track received:", event.track.kind);
+
+    if (callRetryTimeout) {
+      clearTimeout(callRetryTimeout);
+      callRetryTimeout = null;
+    }
   };
 
   peerConnection.onicecandidate = (event) => {
@@ -53,10 +64,19 @@ function disconnectCall() {
   const popup = document.getElementById("videoPopup");
   popup.classList.add("hidden");
 
+  if (callRetryTimeout) {
+    clearTimeout(callRetryTimeout);
+    callRetryTimeout = null;
+  }
+
   if (peerConnection) {
     peerConnection.close();
     peerConnection = null;
   }
+
+  remoteDescSet = false;
+  pendingCandidates = [];
+  retryAttempted = false;
 
   if (localStream) {
     localStream.getTracks().forEach((track) => track.stop());
@@ -72,7 +92,6 @@ function disconnectCall() {
     localVideo.srcObject = null;
   }
 
-  // ✅ Show call button again
   startCallBtn.style.display = "inline-block";
 }
 
@@ -88,7 +107,6 @@ startCallBtn.onclick = async () => {
     });
     localVideo.srcObject = localStream;
 
-    // ✅ Hide call button during call
     startCallBtn.style.display = "none";
 
     createPeerConnection(toSocketId);
@@ -101,6 +119,18 @@ startCallBtn.onclick = async () => {
     await peerConnection.setLocalDescription(offer);
 
     socket.emit("offer", { offer, to: toSocketId });
+
+    // Retry logic: Wait 5s for remote track, if not received, retry once
+    callRetryTimeout = setTimeout(() => {
+      if (!remoteStream || remoteStream.getTracks().length === 0) {
+        console.warn("🕒 No remote track received in 5s, retrying...");
+        if (!retryAttempted) {
+          retryAttempted = true;
+          disconnectCall();
+          startCallBtn.click(); // Retry call once
+        }
+      }
+    }, 5000);
   } catch (err) {
     console.error("Error starting call:", err);
     alert("Could not access camera/mic.");
@@ -112,12 +142,11 @@ closeBtn.onclick = () => {
   const popup = document.getElementById("videoPopup");
   const toSocketId = popup.dataset.socketId;
 
-  // Only emit hang-up if a call is in progress
   if (toSocketId && peerConnection) {
     socket.emit("hang-up", { to: toSocketId });
   }
 
-  disconnectCall(); // Always clean up locally
+  disconnectCall();
 };
 
 hangUpBtn.onclick = () => {
@@ -142,7 +171,6 @@ socket.on("offer", async ({ offer, from }) => {
     popup.classList.remove("hidden");
     popup.dataset.socketId = from;
 
-    // ✅ Hide call button during incoming call
     startCallBtn.style.display = "none";
 
     createPeerConnection(from);
@@ -152,6 +180,14 @@ socket.on("offer", async ({ offer, from }) => {
     });
 
     await peerConnection.setRemoteDescription(offer);
+    remoteDescSet = true;
+
+    pendingCandidates.forEach((candidate) => {
+      peerConnection.addIceCandidate(candidate).catch((err) => {
+        console.error("Error adding buffered ICE:", err);
+      });
+    });
+    pendingCandidates = [];
 
     const answer = await peerConnection.createAnswer();
     await peerConnection.setLocalDescription(answer);
@@ -165,11 +201,25 @@ socket.on("offer", async ({ offer, from }) => {
 socket.on("answer", async ({ answer }) => {
   if (!peerConnection) return;
   await peerConnection.setRemoteDescription(answer);
+  remoteDescSet = true;
+
+  pendingCandidates.forEach((candidate) => {
+    peerConnection.addIceCandidate(candidate).catch((err) => {
+      console.error("Error adding buffered ICE:", err);
+    });
+  });
+  pendingCandidates = [];
 });
 
 socket.on("ice-candidate", ({ candidate }) => {
-  if (candidate && peerConnection) {
-    peerConnection.addIceCandidate(candidate);
+  if (!peerConnection || !candidate) return;
+
+  if (remoteDescSet) {
+    peerConnection.addIceCandidate(candidate).catch((err) => {
+      console.error("Error adding ICE candidate:", err);
+    });
+  } else {
+    pendingCandidates.push(candidate);
   }
 });
 
@@ -182,7 +232,7 @@ socket.on("hang-up", () => {
 
 socket.on("call-declined", ({ from }) => {
   alert("Call declined by the remote user!");
-  disconnectCall(); // ✅ Optional: ensures full cleanup
+  disconnectCall();
 });
 
 socket.on("disconnect", () => {
