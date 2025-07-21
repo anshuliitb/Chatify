@@ -166,14 +166,14 @@ hangUpBtn.onclick = () => {
 };
 
 socket.on("offer", async ({ offer, from, username }) => {
+  const popup = document.getElementById("videoPopup");
+  const localUsernameLabel = popup.querySelector(
+    "#remoteUsernameLabel"
+  ).textContent;
   console.log("📞 [offer] Incoming offer from", from, localUsernameLabel);
 
   const accept = confirm(`${username} is calling you. Accept the video call?`);
   if (!accept) {
-    const popup = document.getElementById("videoPopup");
-    const localUsernameLabel = popup.querySelector(
-      "#remoteUsernameLabel"
-    ).textContent;
     console.log("🚫 [offer] Call declined by user.");
     socket.emit("call-declined", { to: from, localUsernameLabel });
     return;
@@ -256,7 +256,7 @@ socket.on("hang-up", () => {
   }, 800);
 });
 
-socket.on("call-declined", ({ username }) => {
+socket.on("call-declined", ({ to, username }) => {
   alert(`Call declined by the ${username}!`);
   console.log("🚫 [call-declined] Call declined by", username);
 
