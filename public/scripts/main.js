@@ -168,9 +168,10 @@ hangUpBtn.onclick = () => {
 socket.on("offer", async ({ offer, from, username }) => {
   const popup = document.getElementById("videoPopup");
   popup.querySelector("#remoteUsernameLabel").textContent = username;
-  const localUsernameLabel = popup.querySelector(
-    "#remoteUsernameLabel"
+  const localUsernameLabel = document.querySelector(
+    "#localUsernameLabel"
   ).textContent;
+
   console.log("📞 [offer] Incoming offer from", from, localUsernameLabel);
 
   const accept = confirm(`${username} is calling you. Accept the video call?`);
