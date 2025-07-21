@@ -113,10 +113,9 @@ function disconnectCall() {
 
 startCallBtn.onclick = async () => {
   const popup = document.getElementById("videoPopup");
-  console.log("popup.datatset:", popup.dataset);
 
   const toSocketId = popup.dataset.socketId;
-  const username = startCallBtn.dataset.username;
+  const username = document.getElementById("#localUsernameLabel").textContent;
   if (!toSocketId) return alert("Invalid recipient");
 
   try {
