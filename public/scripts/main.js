@@ -181,7 +181,7 @@ socket.on("offer", async ({ offer, from, username }) => {
     popup.dataset.socketId = from;
     startCallBtn.style.display = "none";
 
-    popup.getElementById("remoteUsernameLabel").textContent = username;
+    popup.querySelector("#remoteUsernameLabel").textContent = username;
 
     createPeerConnection(from);
 
