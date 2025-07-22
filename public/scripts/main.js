@@ -292,7 +292,18 @@ socket.on("ice-candidate", async ({ candidate }) => {
 
 socket.on("hang-up", () => {
   console.log("📴 [hang-up] Call ended by remote");
+
+  // ✅ Stop ringtone
+  stopRingtone();
+
+  // ✅ Hide the incoming call popup if it's visible
+  const callPopup = document.getElementById("incomingCallPopup");
+  if (callPopup) callPopup.classList.add("hidden");
+
+  // ✅ Cleanup everything else
   disconnectCall();
+
+  // ✅ Show custom alert message
   showCustomAlert("📴 Remote user disconnected the call.");
 });
 
