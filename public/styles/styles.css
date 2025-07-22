@@ -445,12 +445,18 @@ body {
   border: none;
   font-size: 20px;
   cursor: pointer;
-  margin-right: 5px;
+}
+
+.input-area {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  background-color: #fff;
+  gap: 10px;
 }
 
 .input-area button {
-  margin-left: 0px;
-  margin-right: 10px;
   padding: 10px 10px;
   background-color: #25d366;
   color: #fff;
@@ -458,15 +464,15 @@ body {
   border: none;
   border-radius: 50%;
   cursor: pointer;
+  flex-shrink: 0;
+  margin: 0;
 }
 
 #submitBtn {
-  margin-left: 10px;
-  margin-right: 0px;
-  padding-left: 12px;
-  padding-right: 12px;
+  padding-left: 14px;
+  padding-right: 14px;
 }
 
 .message-content div {
-  font-size: 20px;
+  font-size: 18px;
 }
