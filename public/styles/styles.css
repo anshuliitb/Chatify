@@ -479,17 +479,22 @@ body {
 }
 
 @media (max-width: 600px) {
-  .input-area {
-    flex-wrap: nowrap;
+  .chatbox {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
   }
 
-  #messageInput {
+  .messages {
     flex: 1;
-    min-width: 0;
+    overflow-y: auto;
   }
 
-  .emoji-btn,
-  #submitBtn {
-    flex-shrink: 0;
+  .input-area {
+    position: sticky;
+    bottom: 0;
+    background-color: #fff;
+    z-index: 5;
   }
 }
