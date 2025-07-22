@@ -1,6 +1,10 @@
 import { registerUIEmitters } from "./socketEvents/registerUIEmitters.js";
 import { registerSocketListeners } from "./socketEvents/registerSocketListeners.js";
 import initEmojiPicker from "./socketEvents/emoji.js";
+import {
+  playRingtone,
+  stopRingtone,
+} from "./socketEvents/videoCallRingtone.js";
 
 export const socket = io();
 
@@ -176,10 +180,14 @@ socket.on("offer", async ({ offer, from, username }) => {
     "#localUsernameLabel"
   ).textContent;
 
+  playRingtone();
+
   console.log("📞 [offer] Incoming offer from", from, username);
   console.log("local", localUsernameLabel, "remote", remoteUsernameLabel);
 
   const accept = confirm(`${username} is calling you. Accept the video call?`);
+  stopRingtone();
+
   if (!accept) {
     console.log("🚫 [offer] Call declined by user.");
     socket.emit("call-declined", { to: from, username: localUsernameLabel });
