@@ -471,6 +471,7 @@ body {
 #submitBtn {
   padding-left: 14px;
   padding-right: 14px;
+  flex-shrink: 0;
 }
 
 .message-content div {
