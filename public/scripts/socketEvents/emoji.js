@@ -15,6 +15,5 @@ export default function initEmojiPicker() {
   emojiPicker.addEventListener("emoji-click", (event) => {
     const emoji = event.detail.unicode;
     messageInput.value += emoji;
-    emojiPicker.style.display = "none";
   });
 }
