@@ -20,6 +20,10 @@ export function registerUIEmitters(socket) {
       welcomeMsg.innerText = `Welcome, ${username}!`;
       const localUsernameLabel = document.getElementById("localUsernameLabel");
       localUsernameLabel.textContent = username;
+
+      // IOS interation fix
+      const submitBtn = document.getElementById("submitBtn");
+      submitBtn.click();
     }
   });
 
