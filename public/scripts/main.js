@@ -185,57 +185,70 @@ socket.on("offer", async ({ offer, from, username }) => {
   console.log("📞 [offer] Incoming offer from", from, username);
   console.log("local", localUsernameLabel, "remote", remoteUsernameLabel);
 
-  const accept = confirm(`${username} is calling you. Accept the video call?`);
-  stopRingtone();
+  const callPopup = document.getElementById("incomingCallPopup");
+  const callText = document.getElementById("incomingCallText");
+  const acceptBtn = document.getElementById("acceptCallBtn");
+  const rejectBtn = document.getElementById("rejectCallBtn");
 
-  if (!accept) {
+  callText.textContent = `${username} is calling you. Accept the video call?`;
+  callPopup.classList.remove("hidden");
+
+  // Handler: Accept
+  acceptBtn.onclick = async () => {
+    callPopup.classList.add("hidden");
+    stopRingtone();
+
+    try {
+      console.log("🎙️ [offer] Getting local media...");
+      localStream = await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: true,
+      });
+      console.log("🎥 [offer] Local media acquired.");
+      localVideo.srcObject = localStream;
+
+      const popup = document.getElementById("videoPopup");
+      popup.classList.remove("hidden");
+      popup.dataset.socketId = from;
+      startCallBtn.style.display = "none";
+
+      createPeerConnection(from);
+
+      localStream.getTracks().forEach((track) => {
+        console.log("📥 [offer] Adding local track:", track.kind);
+        peerConnection.addTrack(track, localStream);
+      });
+
+      await peerConnection.setRemoteDescription(offer);
+      console.log("📩 [offer] Remote description set.");
+
+      bufferedCandidates.forEach((c) => {
+        console.log("🧊 [offer] Flushing buffered ICE:", c.candidate.candidate);
+        peerConnection
+          .addIceCandidate(c.candidate)
+          .catch((err) =>
+            console.error("❌ [offer] Error adding buffered ICE:", err)
+          );
+      });
+      bufferedCandidates = [];
+
+      const answer = await peerConnection.createAnswer();
+      await peerConnection.setLocalDescription(answer);
+      console.log("📨 [offer] Sending answer to", from);
+
+      socket.emit("answer", { answer, to: from });
+    } catch (err) {
+      console.error("❌ [offer] Error handling offer:", err);
+    }
+  };
+
+  // Handler: Reject
+  rejectBtn.onclick = () => {
+    callPopup.classList.add("hidden");
+    stopRingtone();
     console.log("🚫 [offer] Call declined by user.");
     socket.emit("call-declined", { to: from, username: localUsernameLabel });
-    return;
-  }
-
-  try {
-    console.log("🎙️ [offer] Getting local media...");
-    localStream = await navigator.mediaDevices.getUserMedia({
-      video: true,
-      audio: true,
-    });
-    console.log("🎥 [offer] Local media acquired.");
-    localVideo.srcObject = localStream;
-
-    const popup = document.getElementById("videoPopup");
-    popup.classList.remove("hidden");
-    popup.dataset.socketId = from;
-    startCallBtn.style.display = "none";
-
-    createPeerConnection(from);
-
-    localStream.getTracks().forEach((track) => {
-      console.log("📥 [offer] Adding local track:", track.kind);
-      peerConnection.addTrack(track, localStream);
-    });
-
-    await peerConnection.setRemoteDescription(offer);
-    console.log("📩 [offer] Remote description set.");
-
-    bufferedCandidates.forEach((c) => {
-      console.log("🧊 [offer] Flushing buffered ICE:", c.candidate.candidate);
-      peerConnection
-        .addIceCandidate(c.candidate)
-        .catch((err) =>
-          console.error("❌ [offer] Error adding buffered ICE:", err)
-        );
-    });
-    bufferedCandidates = [];
-
-    const answer = await peerConnection.createAnswer();
-    await peerConnection.setLocalDescription(answer);
-    console.log("📨 [offer] Sending answer to", from);
-
-    socket.emit("answer", { answer, to: from });
-  } catch (err) {
-    console.error("❌ [offer] Error handling offer:", err);
-  }
+  };
 });
 
 socket.on("answer", async ({ answer }) => {

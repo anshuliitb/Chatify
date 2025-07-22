@@ -93,6 +93,19 @@
       </div>
     </div>
 
+    <!-- Incoming Call Popup -->
+    <div id="incomingCallPopup" class="call-popup hidden">
+      <div id="incomingCallText" class="call-text">Incoming call...</div>
+      <div class="call-buttons">
+        <button id="acceptCallBtn" class="btn accept">
+          <i class="fas fa-phone"></i> Accept
+        </button>
+        <button id="rejectCallBtn" class="btn reject">
+          <i class="fas fa-phone-slash"></i> Reject
+        </button>
+      </div>
+    </div>
+
     <script src="/socket.io/socket.io.js"></script>
     <script type="module" src="/scripts/main.js"></script>
     <script
