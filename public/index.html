@@ -43,7 +43,8 @@
 
         <p id="typingIndicator" class="typing-indicator"></p>
 
-        <form id="messageForm" class="input-area">
+        <form id="messageForm" class="input-area" style="position: relative">
+          <button type="button" id="emojiBtn" class="emoji-btn">😊</button>
           <input
             id="messageInput"
             type="text"
@@ -51,6 +52,18 @@
             placeholder="Type a message"
           />
           <button type="submit">➤</button>
+
+          <!-- Hidden emoji picker -->
+          <emoji-picker
+            id="emojiPicker"
+            style="
+              display: none;
+              position: absolute;
+              bottom: 50px;
+              left: 0;
+              z-index: 999;
+            "
+          ></emoji-picker>
         </form>
       </main>
     </div>
@@ -82,5 +95,9 @@
 
     <script src="/socket.io/socket.io.js"></script>
     <script type="module" src="/scripts/main.js"></script>
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"
+    ></script>
   </body>
 </html>

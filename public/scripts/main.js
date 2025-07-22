@@ -1,10 +1,12 @@
 import { registerUIEmitters } from "./socketEvents/registerUIEmitters.js";
 import { registerSocketListeners } from "./socketEvents/registerSocketListeners.js";
+import initEmojiPicker from "./socketEvents/emoji.js";
 
 export const socket = io();
 
 registerUIEmitters(socket);
 registerSocketListeners(socket);
+initEmojiPicker();
 
 const localVideo = document.getElementById("localVideo");
 const remoteVideo = document.getElementById("remoteVideo");

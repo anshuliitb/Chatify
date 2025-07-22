@@ -437,3 +437,13 @@ body {
     font-size: 20px;
   }
 }
+
+/* ================= Emoji ================= */
+
+.emoji-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  margin-right: 5px;
+}
