@@ -492,9 +492,19 @@ body {
   }
 
   .input-area {
-    position: sticky;
-    bottom: 0;
-    background-color: #fff;
-    z-index: 5;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px;
+  }
+
+  #messageInput {
+    flex: 1;
+    min-width: 0;
+  }
+
+  #submitBtn {
+    flex-shrink: 0;
+    margin-left: 8px;
   }
 }
