@@ -480,18 +480,16 @@ body {
 
 @media (max-width: 600px) {
   .input-area {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* ensure consistent spacing */
-  }
-
-  .emoji-btn,
-  #submitBtn {
-    flex-shrink: 0;
+    flex-wrap: nowrap;
   }
 
   #messageInput {
     flex: 1;
     min-width: 0;
+  }
+
+  .emoji-btn,
+  #submitBtn {
+    flex-shrink: 0;
   }
 }
