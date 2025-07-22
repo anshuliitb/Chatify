@@ -27,6 +27,22 @@ const config = {
   iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
 };
 
+function showCustomAlert(message) {
+  const alertEl = document.getElementById("customAlert");
+  const alertText = document.getElementById("customAlertText");
+  const okBtn = document.getElementById("customAlertOkBtn");
+
+  alertText.textContent = message;
+  alertEl.classList.remove("hidden");
+
+  const handleClose = () => {
+    alertEl.classList.add("hidden");
+    okBtn.removeEventListener("click", handleClose);
+  };
+
+  okBtn.addEventListener("click", handleClose);
+}
+
 function createPeerConnection(toSocketId) {
   console.log(
     "🧱 [createPeerConnection] Creating RTCPeerConnection for",
@@ -277,13 +293,11 @@ socket.on("ice-candidate", async ({ candidate }) => {
 socket.on("hang-up", () => {
   console.log("📴 [hang-up] Call ended by remote");
   disconnectCall();
-  setTimeout(() => {
-    alert("📴 Remote user disconnected the call.");
-  }, 800);
+  showCustomAlert("📴 Remote user disconnected the call.");
 });
 
 socket.on("call-declined", ({ to, username }) => {
-  alert(`Call declined by the ${username}!`);
+  showCustomAlert(`Call declined by the ${username}!`);
   console.log("🚫 [call-declined] Call declined by", username);
 
   disconnectCall();
