@@ -2,6 +2,7 @@ export default function initEmojiPicker() {
   const emojiBtn = document.getElementById("emojiBtn");
   const emojiPicker = document.getElementById("emojiPicker");
   const messageInput = document.getElementById("messageInput");
+  const submitBtn = document.getElementById("submitBtn");
 
   if (!emojiBtn || !emojiPicker || !messageInput) return;
 
@@ -15,5 +16,9 @@ export default function initEmojiPicker() {
   emojiPicker.addEventListener("emoji-click", (event) => {
     const emoji = event.detail.unicode;
     messageInput.value += emoji;
+  });
+
+  submitBtn.addEventListener("click", () => {
+    emojiPicker.style.display = "none";
   });
 }
